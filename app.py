@@ -10,7 +10,7 @@ class Actions(Enum):
     PRINT = 3
     FIND = 4
     CLOSE = 5
-    CLEAR = 6
+    CLEARCONSOLE = 6
 
 
 
@@ -35,17 +35,24 @@ def RunProgram():
             ManageDeletion(Carslist)
 
         if user_action == Actions.PRINT:
-            print(Carslist)
+            if len(Carslist) <= 0:
+                print("No Cars Found")
+                continue
+
+            for car in Carslist:
+                print(f"Car Name: {car['name']}, Car Color: {car['color']}, Car Company: {car['company']}, Car Price: ${AddCommas(int(car['price']))}\n")
+
 
         if user_action == Actions.FIND:
             carname = input("Car Name: ")
-            findCarByName(Carslist,carname)
-
+            found,foundcar = findCarByName(Carslist,carname)
+            if(found): print(f"Car Name: {foundcar['name']}, Car Color: {foundcar['color']}, Car Company: {foundcar['company']}, Car Price: ${AddCommas(int(foundcar['price']))}\n")
+            else: print("Car " + carname + " Not Found")
         if user_action == Actions.CLOSE:
             print("Stopping Program")
             break
 
-        if user_action == Actions.CLEAR:
+        if user_action == Actions.CLEARCONSOLE:
             ClearConsole()
 
 def PrintActions():

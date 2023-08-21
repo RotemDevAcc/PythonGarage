@@ -34,7 +34,7 @@ def ManageAdding(table):
     if(carname and carcolor and carcomp and carprice):
         table.append({"name" : carname, "color" : carcolor, "company": carcomp, "price": carprice})
         SaveCarsToCSV(table)
-        print(f"Added A New Car, Name: {carname}\nColor: {carcolor}\nCompany: {carcomp}\nPrice: {AddCommas(int(carprice))}")
+        print(f"Added A New Car, Name: {carname}\nColor: {carcolor}\nCompany: {carcomp}\nPrice: ${AddCommas(int(carprice))}")
     else:
         print(f"Error: Not Enough Arguments Wanted 4 Got Less")
 
