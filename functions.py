@@ -1,26 +1,36 @@
 import os
 import csv
 filename = "cars.csv"
+
+# מנקה קונסול
 def ClearConsole():
     os.system("cls" if os.name == "nt" else "clear")
 
 
+# מוסיף פסיקים למספר במקום 1000 אז יהיה 1,000 ויותר מובן
 def AddCommas(number):
     return ("{:,}".format(number))
 
-def ManageDeletion(table):
-    carname = input("Enter Car Name: ")
 
-    found,car = findCarByName(table,carname)
-    if not found:
+# תהליך מחיקת רכבים
+def ManageDeletion(table):
+    carname = input("Enter Car Name: ") # שם רכב
+
+    found,car = findCarByName(table,carname) # למצוא רכב על פי השם
+    if not found: # הרכב לא נמצא
         print(f"{carname} Not Found In Database")
-    else:
+    else: # הרכב נמצא
         print(f"{car['name']} Deleted")
+        # מוחק את הרכב מהמערך
         table.remove(car)
+        # מעדכן את השינויים לקובץ
         SaveCarsToCSV(table)
 
 
+#תהליך הוספת רכבים
 def ManageAdding(table):
+
+
     carname = input("Enter Car Name [Example: Land Cruiser]: ")
     carcolor = input("Enter Car Color [Example: Baby Blue]: ")
     carcomp = input("Enter Car Type [Example: BMW, Audi]: ")
@@ -28,19 +38,24 @@ def ManageAdding(table):
 
 
 
+    # אם המחיר לא יכול להיות מספיר עוצרים ומדווחים
     if not carprice.strip().isdigit():
         return print("ERROR: Car Price Must Be An Integer (Number)")
 
+    # אם מילאנו את כל הפרטים
     if(carname and carcolor and carcomp and carprice):
+        # מוסיפים למערך
         table.append({"name" : carname, "color" : carcolor, "company": carcomp, "price": carprice})
+        # שומרים לקובץ
         SaveCarsToCSV(table)
+        # מדפיסים שם, צבע, חברה, ומחיר
         print(f"Added A New Car, Name: {carname}\nColor: {carcolor}\nCompany: {carcomp}\nPrice: ${AddCommas(int(carprice))}")
-    else:
+    else: # אם לא
         print(f"Error: Not Enough Arguments Wanted 4 Got Less")
 
-def is_number(value):
-    return isinstance(value, (int, float))
 
+
+# מחפש משהו במערך על פי שם לא חייב להיות מכוניות
 def findCarByName(table,name):
     for car in table:
         if car["name"] == name:
@@ -49,8 +64,10 @@ def findCarByName(table,name):
     return None,None
 
 
+# שומר את הפרטים לקובץ
 def SaveCarsToCSV(table):
-    global filename
+    global filename # משתמשם בשם קובץ שמוגדר למעלה
+    # CSV פותח את הקובץ עם גישת כתיבה בתור קובץ
     with open(filename, 'w', newline='') as csvfile:
         fieldnames = ['name', 'color', 'company', 'price']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -61,9 +78,11 @@ def SaveCarsToCSV(table):
     print(f'Carslist saved to {filename}')
 
 
+# טוען את הרכבים השמורים
 def LoadCarsFromCSV():
-    global filename
+    global filename # משתמשם בשם קובץ שמוגדר למעלה
     table = []
+    # מנסה לפתוח את הקובץ
     try:
         with open(filename, 'r', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -76,8 +95,8 @@ def LoadCarsFromCSV():
                 })
         print(f'Carslist loaded from {filename}')
         return table
-    except FileNotFoundError:
+    except FileNotFoundError: # אם לא נמצא
         print(f'File not found: {filename}')
-        return []
-    except Exception as e:
-        return []
+        return [] # מחזיר מערך ריק
+    except Exception as e: # כל בעיה אחרת שלא הצליח לפתוח בגללה
+        return [] # מחזיר מערך ריק
