@@ -66,7 +66,8 @@ def findCarByName(table,name):
 
 # שומר את הפרטים לקובץ
 def SaveCarsToCSV(table):
-    global filename # משתמשם בשם קובץ שמוגדר למעלה
+    # משתמשם בשם קובץ שמוגדר למעלה
+    global filename 
     # CSV פותח את הקובץ עם גישת כתיבה בתור קובץ
     with open(filename, 'w', newline='') as csvfile:
         fieldnames = ['name', 'color', 'company', 'price']
@@ -80,7 +81,8 @@ def SaveCarsToCSV(table):
 
 # טוען את הרכבים השמורים
 def LoadCarsFromCSV():
-    global filename # משתמשם בשם קובץ שמוגדר למעלה
+    # משתמשם בשם קובץ שמוגדר למעלה
+    global filename 
     table = []
     # מנסה לפתוח את הקובץ
     try:
@@ -95,8 +97,12 @@ def LoadCarsFromCSV():
                 })
         print(f'Carslist loaded from {filename}')
         return table
-    except FileNotFoundError: # אם לא נמצא
+     # אם לא נמצא
+    except FileNotFoundError:
         print(f'File not found: {filename}')
-        return [] # מחזיר מערך ריק
-    except Exception as e: # כל בעיה אחרת שלא הצליח לפתוח בגללה
-        return [] # מחזיר מערך ריק
+        # מחזיר מערך ריק
+        return [] 
+    # כל בעיה אחרת שלא הצליח לפתוח בגללה
+    except Exception as e: 
+        # מחזיר מערך ריק
+        return [] 
