@@ -24,7 +24,7 @@ def RunProgram():
         user_action =input("Select Your Action: ") 
         # אם אין פעולה מתחילים מחדש כדי למנוע תקלות
         if user_action == None or user_action == "": 
-            print("No Action Selected")
+            print("\033[93mNo Action Selected\033[0m")
             continue
         user_action =  Actions(int(user_action))
 
@@ -35,7 +35,7 @@ def RunProgram():
         if user_action == Actions.DELETE:
              # אם אין רכבים שמורים אין מה לעבור את התהליך הזה
             if len(Carslist) <= 0:
-                print("Warning: Carlist is Empty, Please Add Cars Before Trying To Remove.")
+                print("\033[93mWarning: Carlist is Empty, Please Add Cars Before Trying To Remove.\033[0m")
                 continue
 
             ManageDeletion(Carslist) # תהליך מחיקת רכבים
@@ -59,7 +59,7 @@ def RunProgram():
             if(found): print(f"Car Name: {foundcar['name']}, Car Color: {foundcar['color']}, Car Company: {foundcar['company']}, Car Price: ${AddCommas(int(foundcar['price']))}\n")
             else: print("Car " + carname + " Not Found")
         if user_action == Actions.CLOSE:
-            print("Stopping Program")
+            print("\033[93mStopping Program\033[0m")
             # עוצר הכל
             break 
 

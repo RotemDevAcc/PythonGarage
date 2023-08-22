@@ -18,7 +18,7 @@ def ManageDeletion(table):
 
     found,car = findCarByName(table,carname) # למצוא רכב על פי השם
     if not found: # הרכב לא נמצא
-        print(f"{carname} Not Found In Database")
+        print(f"\033[93m{carname} Not Found In Database\033[0m")
     else: # הרכב נמצא
         print(f"{car['name']} Deleted")
         # מוחק את הרכב מהמערך
@@ -40,7 +40,7 @@ def ManageAdding(table):
 
     # אם המחיר לא יכול להיות מספיר עוצרים ומדווחים
     if not carprice.strip().isdigit():
-        return print("ERROR: Car Price Must Be An Integer (Number)")
+        return print("\033[93mERROR: Car Price Must Be An Integer (Number)\033[0m")
 
     # אם מילאנו את כל הפרטים
     if(carname and carcolor and carcomp and carprice):
@@ -51,7 +51,7 @@ def ManageAdding(table):
         # מדפיסים שם, צבע, חברה, ומחיר
         print(f"Added A New Car, Name: {carname}\nColor: {carcolor}\nCompany: {carcomp}\nPrice: ${AddCommas(int(carprice))}")
     else: # אם לא
-        print(f"Error: Not Enough Arguments Wanted 4 Got Less")
+        print(f"\033[93mError: Not Enough Arguments Wanted 4 Got Less\033[0m")
 
 
 
