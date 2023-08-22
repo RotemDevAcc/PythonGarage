@@ -38,7 +38,7 @@ def ManageAdding(table):
 
 
 
-    # אם המחיר לא יכול להיות מספיר עוצרים ומדווחים
+    # אם המחיר לא יכול להיות מספר עוצרים ומדווחים
     if not carprice.strip().isdigit():
         return print("\033[93mERROR: Car Price Must Be An Integer (Number)\033[0m")
 
@@ -49,11 +49,44 @@ def ManageAdding(table):
         # שומרים לקובץ
         SaveCarsToCSV(table)
         # מדפיסים שם, צבע, חברה, ומחיר
-        print(f"Added A New Car, Name: {carname}\nColor: {carcolor}\nCompany: {carcomp}\nPrice: ${AddCommas(int(carprice))}")
+        print(f"\033[92mAdded A New Car, Name: {carname}\nColor: {carcolor}\nCompany: {carcomp}\nPrice: ${AddCommas(int(carprice))}\033[0m")
     else: # אם לא
         print(f"\033[93mError: Not Enough Arguments Wanted 4 Got Less\033[0m")
 
 
+# תהליך עדכון רכב קיים בקבצים
+def UpdateCars(table):
+    carname = input("Enter Car Name [Example: Land Cruiser]: ")
+
+    # אם לא כתבנו רכב עוצרים
+    if(not carname):
+        print("No Car Name Was Sent")
+        return
+    
+    found,unused = findCarByName(table,carname)
+    if(found == None):
+        print(f"\033[93mERROR: Car {carname} Was Not Found\033[0m")
+        return
+    
+    carcolor = input("Enter New Car Color [Example: Baby Blue]: ")
+    carcomp = input("Enter New Car Type [Example: BMW, Audi]: ")
+    carprice = input("Enter New Car Price [Numbers Only]: ")
+
+    # אם המחיר לא יכול להיות מספר עוצרים ומדווחים
+    if not carprice.strip().isdigit():
+        return print("\033[93mERROR: Car Price Must Be An Integer (Number)\033[0m")
+    
+
+    if(carname and carcolor and carcomp and carprice):
+        for entry in table:
+            if entry['name'] == carname:
+                entry['color'] = carcolor
+                entry['company'] = carcomp
+                entry['price'] = carprice
+                break 
+        SaveCarsToCSV(table)
+    else:
+        print(f"\033[93mError: Not Enough Arguments Wanted 4 Got Less\033[0m")
 
 # מחפש משהו במערך על פי שם לא חייב להיות מכוניות
 def findCarByName(table,name):

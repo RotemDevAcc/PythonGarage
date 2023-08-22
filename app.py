@@ -2,15 +2,16 @@ from functions import *
 from enum import Enum
 
 
-Carslist = []
+Carslist = {}
 
 class Actions(Enum):
     ADD = 1
     DELETE = 2
-    PRINT = 3
-    FIND = 4
-    CLOSE = 5
-    CLEARCONSOLE = 6
+    UPDATE = 3
+    PRINT = 4
+    FIND = 5
+    CLOSE = 6
+    CLEARCONSOLE = 7
 
 
 # מתחיל את התהליך
@@ -40,6 +41,9 @@ def RunProgram():
 
             ManageDeletion(Carslist) # תהליך מחיקת רכבים
 
+        if user_action == Actions.UPDATE:
+            UpdateCars(Carslist)
+
         if user_action == Actions.PRINT:
             # אם אין רכבים שמורים אין מה לעבור את התהליך הזה
             if len(Carslist) <= 0: 
@@ -47,16 +51,16 @@ def RunProgram():
                 continue
             # עובר על כל המערך של הרכבים ומדפיס שם, צבע, חברה, מחיר עם פסיקים, ואז יורד שורה לקראת הרכב הבא
             for car in Carslist:
-                print(f"Car Name: {car['name']}, Car Color: {car['color']}, Car Company: {car['company']}, Car Price: ${AddCommas(int(car['price']))}\n")
+                print(f"Car Name: {car['name']}, Car Color: {car['color']}, Car Company: {car['company']}, Car Price: \033[92m${AddCommas(int(car['price']))}\n\033[0m")
             # סך הכל מכוניות
-            print(f"Total Cars: {len(Carslist)}") 
+            print(f"\033[92mTotal Cars: {len(Carslist)}\033[0m") 
 
 
         if user_action == Actions.FIND:
             carname = input("Car Name: ")
             # מחפש רכב על פי השם שלו
             found,foundcar = findCarByName(Carslist,carname) 
-            if(found): print(f"Car Name: {foundcar['name']}, Car Color: {foundcar['color']}, Car Company: {foundcar['company']}, Car Price: ${AddCommas(int(foundcar['price']))}\n")
+            if(found): print(f"\033[92mCar Name: {foundcar['name']}, Car Color: {foundcar['color']}, Car Company: {foundcar['company']}, Car Price: ${AddCommas(int(foundcar['price']))}\n\033[0m")
             else: print("Car " + carname + " Not Found")
         if user_action == Actions.CLOSE:
             print("\033[93mStopping Program\033[0m")
@@ -69,7 +73,8 @@ def RunProgram():
 
 def PrintActions():
     for action in Actions:
-        print(f"{action.name} - {action.value}")
+        print(f"\033[95m{action.name} - {action.value}\033[0m")
+
 
 # כשהתוכנה עולה
 if __name__ == "__main__": 
